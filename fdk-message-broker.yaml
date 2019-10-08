@@ -1,0 +1,28 @@
+asyncapi: '2.0.0'
+info:
+  title: FDK message broker
+  version: '0.1.0'
+servers:
+  development:
+    url: it1.broker.fellesdatakatalog.brreg.no:5672
+    description: Development broker
+    protocol: amqp
+    protocolVersion: '1.0.0'
+channels:
+  conceptHarvestTrigger:
+    publish:
+      message:
+        $ref: '#/components/messages/conceptHarvestTrigger-msg'
+components:
+  messages:
+    conceptHarvestTrigger-msg:
+      payload:
+        type: object
+        properties:
+          publisherId:
+            type: string
+          catalogueId:
+            type: string
+  securitySchemes:
+    user-password:
+      type: userPassword
