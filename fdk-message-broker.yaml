@@ -5,7 +5,6 @@ info:
   description: |
     The FDK message broker is a broker service that producers can publish messages that represents
     events in the [FDK](https://fellesdatakatalog.brreg.no) domain.
-
     ## Events supported
     * Harvest concepts
 servers:
@@ -62,6 +61,11 @@ channels:
     subscribe:
       message:
         $ref: '#/components/messages/conceptPublisherHarvestTrigger-msg'
+  conceptPublisher.NewDataSource:
+    description: The topic on which a new DataSource is created after being consumed
+    subscribe:
+      message:
+        $ref: '#/components/messages/conceptPublisherNewDataSource-msg'
   conceptCatalogue.HarvestTrigger:
     description: The topic on which the harvest all concepts in a given catalouge event can be produced and consumed
     subscribe:
@@ -74,6 +78,25 @@ channels:
         $ref: '#/components/messages/conceptHarvestTrigger-msg'
 components:
   messages:
+    conceptPublisherNewDataSource-msg:
+      payload:
+        type: object
+        properties:
+          publisherId:
+            type: string
+          dataSourceType:
+            enum:
+              - SKOS-AP-NO
+              - DCAT-AP-NO
+          url:
+            type: string
+          description:
+            type: string
+        required:
+          - publisherId
+          - dataSourceType
+          - url
+
     conceptAllHarvestTrigger-msg:
       contentType: application/json
       payload:
