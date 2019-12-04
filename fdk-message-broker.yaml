@@ -101,7 +101,6 @@ components:
           - publisherId
           - dataSourceType
           - url
-
     allHarvestTrigger-msg:
       contentType: application/json
       payload:
