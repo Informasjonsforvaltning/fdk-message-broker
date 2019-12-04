@@ -51,27 +51,32 @@ servers:
     security:
       - bearerAuth: []
 channels:
-  conceptAll.HarvestTrigger:
+  dataset.publisher.HarvestTrigger:
+    description: The topic on which the harvest all datasets by a given publisher event can be produced and consumed
+    subscribe:
+      message:
+        $ref: '#/components/messages/publisherHarvestTrigger-msg'
+  concept.all.HarvestTrigger:
     description: The topic on which the harvest all concepts event can be produced and consumed
     subscribe:
       message:
-        $ref: '#/components/messages/conceptAllHarvestTrigger-msg'
-  conceptPublisher.HarvestTrigger:
+        $ref: '#/components/messages/allHarvestTrigger-msg'
+  concept.publisher.HarvestTrigger:
     description: The topic on which the harvest all concepts by a given publisher event can be produced and consumed
     subscribe:
       message:
-        $ref: '#/components/messages/conceptPublisherHarvestTrigger-msg'
-  conceptPublisher.NewDataSource:
+        $ref: '#/components/messages/publisherHarvestTrigger-msg'
+  concept.publisher.NewDataSource:
     description: The topic on which a new DataSource is created after being consumed
     subscribe:
       message:
         $ref: '#/components/messages/conceptPublisherNewDataSource-msg'
-  conceptCatalogue.HarvestTrigger:
+  concept.catalogue.HarvestTrigger:
     description: The topic on which the harvest all concepts in a given catalouge event can be produced and consumed
     subscribe:
       message:
-        $ref: '#/components/messages/conceptCatalogueHarvestTrigger-msg'
-  concept.HarvestTrigger:
+        $ref: '#/components/messages/catalogueHarvestTrigger-msg'
+  concept.single.HarvestTrigger:
     description: The topic on which the harvest a given concept event can be produced and consumed
     subscribe:
       message:
@@ -96,12 +101,11 @@ components:
           - publisherId
           - dataSourceType
           - url
-
-    conceptAllHarvestTrigger-msg:
+    allHarvestTrigger-msg:
       contentType: application/json
       payload:
         type: object
-    conceptPublisherHarvestTrigger-msg:
+    publisherHarvestTrigger-msg:
       contentType: application/json
       payload:
         type: object
@@ -110,7 +114,7 @@ components:
             type: string
         required:
           - publisherId
-    conceptCatalogueHarvestTrigger-msg:
+    catalogueHarvestTrigger-msg:
       contentType: application/json
       payload:
         type: object
