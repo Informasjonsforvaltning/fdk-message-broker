@@ -1,0 +1,42 @@
+name: Deploy to production on merge to master branch
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-production:
+    name: Deploy rabbitmq to production environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Apply Helm template
+        uses: stefanprodan/kube-tools@v1
+        with:
+          helm: 2.14.3
+          command: |
+            helm init --client-only
+            helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/
+            helm fetch --untar --untardir ./helm fdk-rabbitmq/rabbitmq
+            helm template -f ./helm/rabbitmq/values/production.yaml ./helm/rabbitmq/ > ./kubectlapply.yaml
+            cat ./kubectlapply.yaml
+            chmod o+w ./kubectlapply.yaml
+            cat kubectlapply.yaml
+
+      - name: Get kubeconfig file from GKE
+        uses: machine-learning-apps/gke-kubeconfig@master
+        with:
+          application_credentials: ${{ secrets.FDK_PROD_AUTODEPLOY }}
+          project_id: fdk-prod
+          location_zone: europe-north1-a
+          cluster_name: fdk-prod
+
+      - name: Deploy to production
+        uses: docker://bitnami/kubectl:latest
+        env:
+          KUBECONFIG: '/github/workspace/.kube/config'
+        with:
+          args: "apply -f ./kubectlapply.yaml --force"
