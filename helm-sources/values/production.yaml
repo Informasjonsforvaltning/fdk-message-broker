@@ -1,0 +1,4 @@
+#DValues for staging environment
+NAMESPACE: prod
+FDK_RABBITMQ_VOLUMENAME: fdk-prod-prod-rabbitmq
+FDK_RABBITMQ_STORAGESIZE: "7G"

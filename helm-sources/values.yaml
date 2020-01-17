@@ -1,0 +1,7 @@
+# Default values for RabbitMQ.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+##rabbitmq
+FDK_RABBITMQ_MEMORY: "150Mi"
+FDK_RABBITMQ_IMAGE: "rabbitmq:management"

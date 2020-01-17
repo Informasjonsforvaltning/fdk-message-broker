@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: rabbitmq
+  name: rabbitmq
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  type: NodePort
+  ports:
+    - name: "5672"
+      port: 5672
+      targetPort: 5672
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
+    - name: "admin-broker"
+      port: 8080
+      targetPort: 15672
+    - name: "broker"
+      port: 8080
+      targetPort: 5672
+  selector:
+    fdk.service: rabbitmq
+status:
+  loadBalancer: {}
