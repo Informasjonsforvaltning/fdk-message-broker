@@ -1,4 +1,0 @@
-#DValues for staging environment
-NAMESPACE: it1
-FDK_RABBITMQ_VOLUMENAME: fdk-dev-it1-rabbitmq
-FDK_RABBITMQ_STORAGESIZE: "7G"

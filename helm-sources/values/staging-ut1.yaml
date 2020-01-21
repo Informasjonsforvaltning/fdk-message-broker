@@ -1,4 +1,0 @@
-#DValues for ut1 environment
-NAMESPACE: ut1
-FDK_RABBITMQ_VOLUMENAME: fdk-dev-ut1-rabbitmq1
-FDK_RABBITMQ_STORAGESIZE: "7G"
