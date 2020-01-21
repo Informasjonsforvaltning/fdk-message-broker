@@ -3,7 +3,7 @@ name: Deploy to production on merge to master branch
 on:
   push:
     branches:
-      - master
+      - non-existing-branch
 
 jobs:
   deploy-production:
