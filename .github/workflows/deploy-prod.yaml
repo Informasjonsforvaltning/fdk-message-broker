@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Create yaml file from secret
+        id: write_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'secret.yaml'
+          encodedString: ${{ secrets.FDK_RABBITMQ_PROD }}
+
       - name: Apply Helm template
         uses: stefanprodan/kube-tools@v1
         with:
@@ -21,8 +28,7 @@ jobs:
             helm init --client-only
             helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/
             helm fetch --untar --untardir ./helm fdk-rabbitmq/rabbitmq
-            helm template -f ./helm/rabbitmq/values/production.yaml ./helm/rabbitmq/ > ./kubectlapply.yaml
-            cat ./kubectlapply.yaml
+            helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/rabbitmq/ > ./kubectlapply.yaml
             chmod o+w ./kubectlapply.yaml
             cat kubectlapply.yaml
 

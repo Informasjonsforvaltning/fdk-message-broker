@@ -4,4 +4,4 @@
 
 ##rabbitmq
 FDK_RABBITMQ_MEMORY: "150Mi"
-FDK_RABBITMQ_IMAGE: "rabbitmq:management"
+FDK_RABBITMQ_IMAGE: "rabbitmq:3.8.2-management"

@@ -1,4 +1,0 @@
-#DValues for demo environment
-NAMESPACE: demo
-FDK_RABBITMQ_VOLUMENAME: fdk-dev-demo-rabbitmq
-FDK_RABBITMQ_STORAGESIZE: "7G"
