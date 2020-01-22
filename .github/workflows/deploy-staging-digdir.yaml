@@ -52,4 +52,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: pullreminders/slack-action@master
         with:
-          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-message-broker deployed to digdir-staging\"}'
+          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: rabbitmq deployed to digdir-staging\"}'
