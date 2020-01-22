@@ -15,9 +15,9 @@ spec:
     - name: "15672"
       port: 15672
       targetPort: 15672
-#    - name: "admin-broker"
-#      port: 8080
-#      targetPort: 15672
+    - name: "admin-broker"
+      port: 8080
+      targetPort: 15672
     - name: "broker"
       port: 8080
       targetPort: 5672
