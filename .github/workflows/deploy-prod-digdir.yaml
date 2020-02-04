@@ -1,4 +1,4 @@
-name: Deploy to demo
+name: Deploy to production (digdir) on merge to master branch
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  deploy-demo:
-    name: Deploy rabbitmq to demo environment
+  deploy-production:
+    name: Deploy rabbitmq to production environment
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'secret.yaml'
-          encodedString: ${{ secrets.FDK_RABBITMQ_DEMO }}
+          encodedString: ${{ secrets.DIGDIR_FDK_RABBITMQ_PROD }}
 
       - name: Apply Helm template
         uses: stefanprodan/kube-tools@v1
@@ -35,12 +35,12 @@ jobs:
       - name: Get kubeconfig file from GKE
         uses: machine-learning-apps/gke-kubeconfig@master
         with:
-          application_credentials: ${{ secrets.FDK_DEV_AUTODEPLOY }}
-          project_id: fdk-dev
+          application_credentials: ${{ secrets.DIGDIR_FDK_PROD_AUTODEPLOY }}
+          project_id: digdir-fdk-prod
           location_zone: europe-north1-a
-          cluster_name: fdk-dev
+          cluster_name: digdir-fdk-prod
 
-      - name: Deploy to demo
+      - name: Deploy to production
         uses: docker://bitnami/kubectl:latest
         env:
           KUBECONFIG: '/github/workspace/.kube/config'
@@ -52,4 +52,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: pullreminders/slack-action@master
         with:
-          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-message-broker deployed to demo\"}'
+          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-message-broker deployed to digdir-production\"}'

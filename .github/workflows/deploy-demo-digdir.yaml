@@ -1,4 +1,4 @@
-name: Deploy to demo
+name: Deploy to demo (digdir)
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'secret.yaml'
-          encodedString: ${{ secrets.FDK_RABBITMQ_DEMO }}
+          encodedString: ${{ secrets.DIGDIR_FDK_RABBITMQ_DEMO }}
 
       - name: Apply Helm template
         uses: stefanprodan/kube-tools@v1
@@ -35,10 +35,10 @@ jobs:
       - name: Get kubeconfig file from GKE
         uses: machine-learning-apps/gke-kubeconfig@master
         with:
-          application_credentials: ${{ secrets.FDK_DEV_AUTODEPLOY }}
-          project_id: fdk-dev
+          application_credentials: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
+          project_id: digdir-fdk-dev
           location_zone: europe-north1-a
-          cluster_name: fdk-dev
+          cluster_name: digdir-fdk-dev
 
       - name: Deploy to demo
         uses: docker://bitnami/kubectl:latest
@@ -52,4 +52,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: pullreminders/slack-action@master
         with:
-          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-message-broker deployed to demo\"}'
+          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-message-broker deployed to digdir-demo\"}'
