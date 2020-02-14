@@ -17,9 +17,11 @@ spec:
       targetPort: 15672
     - name: "admin-broker"
       port: 8081
+      protocol: TCP
       targetPort: 15672
     - name: "broker"
       port: 8080
+      protocol: TCP
       targetPort: 5672
   selector:
     fdk.service: rabbitmq
