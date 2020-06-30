@@ -4,12 +4,12 @@ info:
   version: '0.1.0'
   description: |
     The FDK message broker is a broker service that producers can publish messages that represents
-    events in the [FDK](https://fellesdatakatalog.brreg.no) domain.
+    events in the [FDK](https://fellesdatakatalog.digdir.no) domain.
     ## Events supported
     * Harvest concepts
 servers:
   production:
-    url: broker.fellesdatakatalog.brreg.no:{port}
+    url: broker.fellesdatakatalog.digdir.no:{port}
     protocol: amqp
     description: Production broker
     protocolVersion: '0.9.1'
@@ -23,7 +23,7 @@ servers:
     security:
       - bearerAuth: []
   staging:
-    url: it1.broker.fellesdatakatalog.brreg.no:{port}
+    url: broker.demo.fellesdatakatalog.digdir.no:{port}
     protocol: amqp
     description: Staging broker
     protocolVersion: '0.9.1'
@@ -37,7 +37,7 @@ servers:
     security:
       - bearerAuth: []
   development:
-    url: ut1.broker.fellesdatakatalog.brreg.no:{port}
+    url: broker.staging.fellesdatakatalog.digdir.no:{port}
     protocol: amqp
     description: Development broker
     protocolVersion: '0.9.1'
