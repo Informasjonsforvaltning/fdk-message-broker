@@ -25,10 +25,10 @@ jobs:
         with:
           helm: 2.14.3
           command: |
-            helm init --client-only
-            helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/
-            helm fetch --untar --untardir ./helm fdk-rabbitmq/rabbitmq
-            helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/rabbitmq/ > ./kubectlapply.yaml
+            helm init --client-only --debug
+            helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/ --debug
+            helm fetch --untar --untardir ./helm fdk-rabbitmq/rabbitmq --debug
+            helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/rabbitmq/ > ./kubectlapply.yaml --debug
             chmod o+w ./kubectlapply.yaml
             cat kubectlapply.yaml
 
@@ -47,13 +47,13 @@ jobs:
         with:
           args: "apply -f ./kubectlapply.yaml --force"
 
-      - name: Notify slack
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          author_name: 'Application: fdk-message-broker | Environment: staging'
-          fields: commit,author,workflow
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+#      - name: Notify slack
+#        uses: 8398a7/action-slack@v3
+#        with:
+#          status: ${{ job.status }}
+#          author_name: 'Application: fdk-message-broker | Environment: staging'
+#          fields: commit,author,workflow
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#        if: always()
