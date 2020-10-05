@@ -20,6 +20,9 @@ jobs:
           fileName: 'secret.yaml'
           encodedString: ${{ secrets.DIGDIR_FDK_RABBITMQ_STAGING }}
 
+      - name: Check yaml file
+        run: cat ${{ steps.write_file.outputs.filePath }}
+
       - name: Apply Helm template
         uses: stefanprodan/kube-tools@v1
         with:
