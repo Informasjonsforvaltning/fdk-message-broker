@@ -25,7 +25,7 @@ jobs:
         with:
           helm: 2.14.3
           command: |
-            helm init --client-only
+            helm init --client-only --output json
             helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/ --debug
             helm fetch --untar --untardir ./helm fdk-rabbitmq/rabbitmq --debug
             helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/rabbitmq/ > ./kubectlapply.yaml
