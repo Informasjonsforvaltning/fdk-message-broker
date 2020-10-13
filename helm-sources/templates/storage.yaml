@@ -6,16 +6,15 @@ metadata:
     fdk.service: rabbitmq-claim1
   name: rabbitmq-claim1
   namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-spec: {{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }}{{ else }}
+spec:
         storageClassName: ""
-        volumeName: {{ required "Missing value FDK_RABBITMQ_VOLUMENAME" .Values.FDK_RABBITMQ_VOLUMENAME }}{{ end }}
+        volumeName: {{ required "Missing value FDK_RABBITMQ_VOLUMENAME" .Values.FDK_RABBITMQ_VOLUMENAME }}
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
             storage: {{ required "Missing value FDK_RABBITMQ_STORAGESIZE" .Values.FDK_RABBITMQ_STORAGESIZE }}
 status: {}
-{{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }} {{ else }}
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -31,4 +30,3 @@ spec:
   gcePersistentDisk:
     pdName: {{ required "Missing value FDK_RABBITMQ_VOLUMENAME" .Values.FDK_RABBITMQ_VOLUMENAME }}
     fsType: ext4
-{{ end }}
