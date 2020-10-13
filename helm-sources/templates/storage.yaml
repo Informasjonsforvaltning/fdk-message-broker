@@ -7,14 +7,15 @@ metadata:
   name: rabbitmq-claim1
   namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
-        storageClassName: ""
-        volumeName: {{ required "Missing value FDK_RABBITMQ_VOLUMENAME" .Values.FDK_RABBITMQ_VOLUMENAME }}
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ required "Missing value FDK_RABBITMQ_STORAGESIZE" .Values.FDK_RABBITMQ_STORAGESIZE }}
+  storageClassName: ""
+  volumeName: {{ required "Missing value FDK_RABBITMQ_VOLUMENAME" .Values.FDK_RABBITMQ_VOLUMENAME }}
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ required "Missing value FDK_RABBITMQ_STORAGESIZE" .Values.FDK_RABBITMQ_STORAGESIZE }}
 status: {}
+
 ---
 kind: PersistentVolume
 apiVersion: v1
