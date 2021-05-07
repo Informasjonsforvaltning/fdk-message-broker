@@ -20,6 +20,21 @@ jobs:
           fileName: 'secret.yaml'
           encodedString: ${{ secrets.DIGDIR_FDK_RABBITMQ_STAGING }}
 
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCP_SA_DIGDIR_FDK_GCR_EMAIL }}
+          service_account_key: ${{ secrets.GCP_SA_DIGDIR_FDK_GCR_KEY }}
+
+      - name: Configure docker to use the gcloud command-line tool as a credential helper
+        run: gcloud auth configure-docker eu.gcr.io
+
+      - name: Build Docker image with GitHub commit sha tag and staging tag
+        run: docker build . -t eu.gcr.io/digdir-fdk-infra/fdk-message-broker:staging_latest -t eu.gcr.io/digdir-fdk-infra/fdk-message-broker:$GITHUB_SHA
+
+      - name: Publish docker image to Google Cloud
+        run: docker -- push eu.gcr.io/digdir-fdk-infra/fdk-message-broker -a
+
       - name: Apply Helm template
         run: |
           helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/
