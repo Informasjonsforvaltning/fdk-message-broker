@@ -3,12 +3,12 @@ entries:
   rabbitmq:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-10-13T15:46:46.785796593+02:00"
+    created: "2021-05-07T14:55:27.996950536+02:00"
     description: Config for RabbitMQ
-    digest: c77d3b974ed55dced12cef5410c47c5ffc738a187c497d17990b4d1fed1dd4cb
+    digest: 905b7e465b245775e3f84f7c8e7663c4828cb2d11bfcab5fe5b53e3677cf5c64
     home: https://github.com/Informasjonsforvaltning/fdk-message-broker
     name: rabbitmq
     urls:
     - https://informasjonsforvaltning.github.io/fdk-message-broker/rabbitmq-0.1.0.tgz
     version: 0.1.0
-generated: "2020-10-13T15:46:46.782834435+02:00"
+generated: "2021-05-07T14:55:27.995624191+02:00"

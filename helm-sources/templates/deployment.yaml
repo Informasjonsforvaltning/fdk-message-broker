@@ -20,7 +20,7 @@ spec:
         fdk.service: rabbitmq
     spec:
       containers:
-        - image: {{ required "Missing value FDK_RABBITMQ_IMAGE" .Values.FDK_RABBITMQ_IMAGE }}
+        - image: {{ required "Missing value DOCKER_IMAGE_NAME" .Values.DOCKER_IMAGE_NAME }}
           imagePullPolicy: Always
           name: rabbitmq
           env:
