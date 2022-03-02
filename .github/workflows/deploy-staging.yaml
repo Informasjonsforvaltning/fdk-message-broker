@@ -2,54 +2,23 @@ name: Deploy to staging
 
 on:
   pull_request:
+    types: [ready_for_review, opened, reopened, synchronize]
     branches:
       - main
 
 jobs:
   deploy-staging:
-    name: Deploy rabbitmq to staging environment when pull request is created
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Create yaml file from secret
-        id: write_file
-        uses: timheuer/base64-to-file@master
-        with:
-          fileName: 'secret.yaml'
-          encodedString: ${{ secrets.DIGDIR_FDK_RABBITMQ_STAGING }}
-
-      - name: Apply Helm template
-        run: |
-          helm repo add fdk-rabbitmq https://informasjonsforvaltning.github.io/fdk-message-broker/
-          helm fetch --untar --untardir ./helm fdk-rabbitmq/rabbitmq
-          helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/rabbitmq/ > ./kubectlapply.yaml
-          chmod o+w ./kubectlapply.yaml
-          cat kubectlapply.yaml
-
-      - name: Get kubeconfig file from GKE
-        uses: machine-learning-apps/gke-kubeconfig@master
-        with:
-          application_credentials: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
-          project_id: digdir-fdk-dev
-          location_zone: europe-north1-a
-          cluster_name: digdir-fdk-dev
-
-      - name: Deploy to staging
-        uses: docker://bitnami/kubectl:latest
-        env:
-          KUBECONFIG: '/github/workspace/.kube/config'
-        with:
-          args: "apply -f ./kubectlapply.yaml --force"
-
-      - name: Notify slack
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          author_name: 'Application: fdk-message-broker | Environment: staging'
-          fields: commit,author,workflow
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+    name: Call reusable workflow when pull request is created
+    if: github.event.pull_request.draft == false
+    uses: Informasjonsforvaltning/workflows/.github/workflows/deploy.yaml@main
+    with:
+      app_name: rabbitmq
+      caller_sha: ${{ github.sha }}
+      repo: ${{ github.repository }}
+      actor: ${{ github.actor }}
+      environment: staging
+      cluster: digdir-fdk-dev
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      DIGDIR_FDK_AUTODEPLOY: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
