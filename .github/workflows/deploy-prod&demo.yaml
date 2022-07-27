@@ -17,6 +17,9 @@ jobs:
       actor: ${{ github.actor }}
       environment: prod
       cluster: digdir-fdk-prod
+      snapshot_disk: fdk-prod-rabbitmq
+      snapshot_name: autodeploy-prod-rabbitmq
+      snapshot_zone: europe-north1-a
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DIGDIR_FDK_AUTODEPLOY: ${{ secrets.DIGDIR_FDK_PROD_AUTODEPLOY }}
