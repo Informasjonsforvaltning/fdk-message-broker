@@ -1,3 +1,12 @@
+⚠️ **Archived / Deprecated**
+
+> This repository is no longer maintained.
+> Its functionality has been replaced by:
+
+➡️ https://github.com/Informasjonsforvaltning/fdk-event-streaming-service
+
+---
+
 # FDK message broker
 
 This repository contains GitHub Actions workflows for deploying a rabbitMQ instance using a shared Helm chart from the [`helm-chart`](https://github.com/Informasjonsforvaltning/helm-chart) repository.
